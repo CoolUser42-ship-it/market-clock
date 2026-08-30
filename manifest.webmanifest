@@ -1,0 +1,16 @@
+{
+  "name": "Market Clock — Global Exchange Hours",
+  "short_name": "Market Clock",
+  "description": "Live global stock exchange trading hours, overlaps, countdowns and holiday closures.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f2f2f3",
+  "theme_color": "#f2f2f3",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Market Clock — Global exchange hours</title>
+<meta name="description" content="Live global stock exchange trading hours, overlaps, countdowns and holiday closures.">
+<meta name="theme-color" content="#f2f2f3">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Market Clock">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="header">
+    <div>
+      <div class="kicker">Global exchange hours</div>
+      <h1 class="title">Market Clock</h1>
+      <div class="subtitle">All timeline times shown in Gloucester / London local time</div>
+    </div>
+    <div class="home-time-block">
+      <div class="home-time" id="home-time">--:--:--</div>
+      <div class="home-meta" id="home-meta">-- · --</div>
+    </div>
+  </header>
+
+  <div class="alerts" id="alerts" hidden></div>
+
+  <section class="cards" id="cards"></section>
+
+  <section class="blueprint map-section">
+    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    <div class="map-head">
+      <h2>24-hour session map</h2>
+      <div class="map-day-label">London axis · 00:00 – 24:00</div>
+    </div>
+
+    <div class="map-scroll">
+      <div class="map-inner" id="map-inner"></div>
+    </div>
+
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="summary">
+    <div class="blueprint summary-card">
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <h3>Open right now</h3>
+      <div class="open-count" id="open-count">–</div>
+      <div class="open-list" id="open-list"></div>
+      <div class="liquidity-note" id="liquidity-note"></div>
+    </div>
+
+    <div class="blueprint summary-card">
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <h3>Key overlap windows</h3>
+      <div class="kv-list" id="overlap-windows"></div>
+    </div>
+
+    <div class="blueprint summary-card">
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <h3>Next 14 days</h3>
+      <div class="kv-list" id="upcoming"></div>
+      <div class="fine-print">Holiday calendar is a working copy — check the exchange notice before trading a session near a closure.</div>
+    </div>
+  </section>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
