@@ -76,6 +76,7 @@ a:hover { color: var(--color-accent-900); }
   color: var(--color-text);
   font-family: var(--font-body);
   padding: clamp(14px, 3vw, 34px);
+  padding-top: max(clamp(14px, 3vw, 34px), env(safe-area-inset-top));
   padding-bottom: max(clamp(14px, 3vw, 34px), env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
