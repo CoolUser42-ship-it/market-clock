@@ -195,3 +195,31 @@ a:hover { color: var(--color-accent-900); }
 .kv-row .value { font-variant-numeric: tabular-nums; color: var(--color-neutral-700); }
 .kv-row .label { color: var(--color-neutral-800); }
 .fine-print { font-size: 11.5px; color: var(--color-neutral-600); line-height: 1.4; }
+
+/* — compare time zones — */
+.compare-section { padding: clamp(14px, 2vw, 22px); display: flex; flex-direction: column; gap: 14px; }
+.compare-section h2 { font-size: 22px; letter-spacing: .01em; }
+.compare-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: clamp(14px, 3vw, 32px);
+}
+.compare-col {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;
+  padding: 14px 12px; border: 1px solid var(--color-divider);
+}
+.compare-select {
+  font-family: var(--font-heading); font-size: 13px; letter-spacing: .04em; text-transform: uppercase;
+  background: var(--color-bg); color: var(--color-text);
+  border: 1px solid var(--color-divider); padding: 6px 10px; width: 100%; max-width: 220px;
+}
+.compare-time {
+  font-family: var(--font-heading); font-size: clamp(32px, 6vw, 48px); line-height: 1;
+  font-variant-numeric: tabular-nums; margin-top: 6px;
+}
+.compare-date {
+  font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--color-neutral-700);
+}
+.compare-tz {
+  font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--color-accent-700);
+  border-top: 1px solid var(--color-divider); padding-top: 6px; margin-top: 4px; width: 100%; max-width: 220px;
+}

@@ -347,7 +347,83 @@ function render(v) {
     : `<div class="kv-row"><span class="label">Nothing scheduled</span></div>`;
 }
 
-function tick() { render(computeState(Date.now())); }
+const COMPARE_LEFT_KEY = 'marketClock.compareLeft';
+const COMPARE_RIGHT_KEY = 'marketClock.compareRight';
+
+function loadCompareSelection(key, fallback) {
+  try {
+    const v = localStorage.getItem(key);
+    return EX.some(ex => ex.code === v) ? v : fallback;
+  } catch { return fallback; }
+}
+function saveCompareSelection(key, value) {
+  try { localStorage.setItem(key, value); } catch {}
+}
+
+let compareLeft = loadCompareSelection(COMPARE_LEFT_KEY, 'LSE');
+let compareRight = loadCompareSelection(COMPARE_RIGHT_KEY, 'NYSE');
+
+const compareEls = {
+  leftSelect: document.getElementById('compare-left'),
+  rightSelect: document.getElementById('compare-right'),
+  leftTime: document.getElementById('compare-left-time'),
+  leftDate: document.getElementById('compare-left-date'),
+  leftTz: document.getElementById('compare-left-tz'),
+  rightTime: document.getElementById('compare-right-time'),
+  rightDate: document.getElementById('compare-right-date'),
+  rightTz: document.getElementById('compare-right-tz')
+};
+
+function populateCompareSelect(select, selected) {
+  select.innerHTML = EX.map(ex => `<option value="${ex.code}"${ex.code === selected ? ' selected' : ''}>${escapeHtml(ex.city)} (${ex.code})</option>`).join('');
+}
+populateCompareSelect(compareEls.leftSelect, compareLeft);
+populateCompareSelect(compareEls.rightSelect, compareRight);
+
+compareEls.leftSelect.addEventListener('change', e => {
+  compareLeft = e.target.value;
+  saveCompareSelection(COMPARE_LEFT_KEY, compareLeft);
+  renderCompare(new Date());
+});
+compareEls.rightSelect.addEventListener('change', e => {
+  compareRight = e.target.value;
+  saveCompareSelection(COMPARE_RIGHT_KEY, compareRight);
+  renderCompare(new Date());
+});
+
+function tzAbbrev(tz, date) {
+  try {
+    const part = new Intl.DateTimeFormat('en-US', { timeZone: tz, timeZoneName: 'short' }).formatToParts(date).find(p => p.type === 'timeZoneName');
+    return part ? part.value : tz;
+  } catch { return tz; }
+}
+
+const FIXED_TZ_ABBR = { TSE: 'JST', HKEX: 'HKT', SGX: 'SGT' };
+
+function exAbbrev(ex, now) {
+  if (FIXED_TZ_ABBR[ex.code]) return FIXED_TZ_ABBR[ex.code];
+  if (ex.code === 'LSE') return offset(now, ex.tz) === 60 ? 'BST' : 'GMT';
+  return tzAbbrev(ex.tz, now);
+}
+
+function renderCompareSide(code, side, now) {
+  const ex = EX.find(e => e.code === code) || EX[0];
+  const p = parts(now, ex.tz);
+  side.time.textContent = fmt(p.mins) + ':' + String(p.s).padStart(2, '0');
+  side.date.textContent = now.toLocaleDateString('en-GB', { timeZone: ex.tz, weekday: 'short', day: 'numeric', month: 'short' });
+  side.tz.textContent = ex.city + ' · ' + exAbbrev(ex, now);
+}
+
+function renderCompare(now) {
+  renderCompareSide(compareLeft, { time: compareEls.leftTime, date: compareEls.leftDate, tz: compareEls.leftTz }, now);
+  renderCompareSide(compareRight, { time: compareEls.rightTime, date: compareEls.rightDate, tz: compareEls.rightTz }, now);
+}
+
+function tick() {
+  const nowMs = Date.now();
+  render(computeState(nowMs));
+  renderCompare(new Date(nowMs));
+}
 tick();
 setInterval(tick, 1000);
 
